@@ -1,4 +1,4 @@
-# MTProto Proxy Auto-Installer (Docker)
+# MTProto Proxy Auto-Installer (Docker) نصب سریع و آسان
 اسکریپت نصب خودکار پروکسی MTProto با Docker که در پایان **فقط لینک اتصال تلگرام** (`tg://...`) را چاپ می‌کند.  
 روی اوبونتو/دبیان/سنتر‌اواس/آر‌اچ‌ئی‌ال و مشتقاتشان تست شده است.
 
@@ -21,59 +21,8 @@
 nano install_mtproto.sh
 ````
 
-2. محتوای کد اصلی را از انتهای همین صفحه  کپی و داخل فایلی که باز کرده‌اید ذخیره کنید (Ctrl+O سپس Enter، و خروج با Ctrl+X).
-3. اجرا:
+2. محتوای کد اصلی را از کپی و داخل فایلی که باز کرده‌اید ذخیره کنید (Ctrl+O سپس Enter، و خروج با Ctrl+X).
 
-```bash
-chmod +x install_mtproto.sh
-sudo bash install_mtproto.sh
-# یا با پورت دلخواه (مثلاً 8443):
-# sudo bash install_mtproto.sh 8443
-```
-
-در پایان، فقط یک لینک مثل زیر چاپ می‌شود. همان را در تلگرام اضافه کنید:
-
-```
-tg://proxy?server=YOUR_IP&port=443&secret=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-```
-
-## بروزرسانی یا تغییر پورت
-
-* توقف و حذف کانتینر:
-
-```bash
-sudo docker rm -f mtp
-```
-
-* اجرای مجدد اسکریپت با پورت جدید:
-
-```bash
-sudo bash install_mtproto.sh 8443
-```
-
-## حذف کامل
-
-```bash
-sudo docker rm -f mtp
-sudo systemctl stop docker || true
-```
-
-## عیب‌یابی
-
-* **Docker بالا نمی‌آید:** لاگ سرویس را چک کنید:
-
-```bash
-sudo journalctl -u docker --no-pager | tail -n 200
-```
-
-* **پورت بسته است:** فایروال را بررسی کنید (`ufw status` یا `firewall-cmd --list-ports`) و پورت انتخابی را باز کنید.
-* **IP اشتباه/خصوصی چاپ می‌شود:** اگر پشت NAT هستید، آدرس عمومی را دستی جایگزین کنید.
-* **فایل‌های بزرگ/پورت 443 درگیر:** پورت دیگری مثل `8443` یا `2053` را امتحان کنید.
-
-## نکات امنیتی و حقوقی
-
-* SECRET را خصوصی نگه دارید.
-* استفاده از پروکسی تابع قوانین محلی شماست؛ مسئولیت استفاده با کاربر است.
 
 ## کد اصلی
 
@@ -151,4 +100,59 @@ IP="$(detect_ip)"
 # Print ONLY the tg:// link
 printf "tg://proxy?server=%s&port=%s&secret=%s\n" "$IP" "$PORT" "$SECRET"
 ````
+
+
+3. اجرا:
+
+```bash
+chmod +x install_mtproto.sh
+sudo bash install_mtproto.sh
+# یا با پورت دلخواه (مثلاً 8443):
+# sudo bash install_mtproto.sh 8443
+```
+
+در پایان، فقط یک لینک مثل زیر چاپ می‌شود. همان را در تلگرام اضافه کنید:
+
+```
+tg://proxy?server=YOUR_IP&port=443&secret=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+## بروزرسانی یا تغییر پورت
+
+* توقف و حذف کانتینر:
+
+```bash
+sudo docker rm -f mtp
+```
+
+* اجرای مجدد اسکریپت با پورت جدید:
+
+```bash
+sudo bash install_mtproto.sh 8443
+```
+
+## حذف کامل
+
+```bash
+sudo docker rm -f mtp
+sudo systemctl stop docker || true
+```
+
+## عیب‌یابی
+
+* **Docker بالا نمی‌آید:** لاگ سرویس را چک کنید:
+
+```bash
+sudo journalctl -u docker --no-pager | tail -n 200
+```
+
+* **پورت بسته است:** فایروال را بررسی کنید (`ufw status` یا `firewall-cmd --list-ports`) و پورت انتخابی را باز کنید.
+* **IP اشتباه/خصوصی چاپ می‌شود:** اگر پشت NAT هستید، آدرس عمومی را دستی جایگزین کنید.
+* **فایل‌های بزرگ/پورت 443 درگیر:** پورت دیگری مثل `8443` یا `2053` را امتحان کنید.
+
+## نکات امنیتی و حقوقی
+
+* SECRET را خصوصی نگه دارید.
+* استفاده از پروکسی تابع قوانین محلی شماست؛ مسئولیت استفاده با کاربر است.
+
 
