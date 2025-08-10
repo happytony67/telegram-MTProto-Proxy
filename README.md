@@ -21,7 +21,7 @@
 nano install_mtproto.sh
 ````
 
-2. محتوای کد اصلی را از کپی و داخل فایلی که باز کرده‌اید ذخیره کنید (Ctrl+O سپس Enter، و خروج با Ctrl+X).
+2. محتوای کد اصلی را کپی و داخل فایلی که باز کرده‌اید ذخیره کنید (Ctrl+O سپس Enter، و خروج با Ctrl+X).
 
 
 ## کد اصلی
@@ -111,7 +111,7 @@ sudo bash install_mtproto.sh
 # sudo bash install_mtproto.sh 8443
 ```
 
-در پایان، فقط یک لینک مثل زیر چاپ می‌شود. همان را در تلگرام اضافه کنید:
+در پایان، فقط یک لینک مثل زیر درست می‌شود می‌شود. همان را در کامل کپی کرده و داخل تلگرام یا برای خود و یا شخص دیگری ارسال کنید و روی آن زده و به تلگرام اضافه کنید و متصل شوید.
 
 ```
 tg://proxy?server=YOUR_IP&port=443&secret=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -125,7 +125,7 @@ tg://proxy?server=YOUR_IP&port=443&secret=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 sudo docker rm -f mtp
 ```
 
-* اجرای مجدد اسکریپت با پورت جدید:
+* تغییر پورت و اجرای مجدد آن:
 
 ```bash
 sudo bash install_mtproto.sh 8443
