@@ -13,6 +13,7 @@
 - دسترسی `root` یا `sudo`
 - یک سرور لینوکسی با IP عمومی
 - پورت پیش‌فرض `443` (قابل تغییر)
+اگر روی پورت ۴۴٣ کار نکرد روی پورت ٨۴۴٣ بگذارید  
 
 ## راه‌اندازی سریع
 1) فایل اسکریپت را روی سرور بسازید:
@@ -20,7 +21,7 @@
 nano install_mtproto.sh
 ````
 
-2. محتوای فایل زیر را کپی و ذخیره کنید (Ctrl+O سپس Enter، و خروج با Ctrl+X).
+2. محتوای کد اصلی را از انتهای همین صفحه  کپی و داخل فایلی که باز کرده‌اید ذخیره کنید (Ctrl+O سپس Enter، و خروج با Ctrl+X).
 3. اجرا:
 
 ```bash
@@ -74,17 +75,10 @@ sudo journalctl -u docker --no-pager | tail -n 200
 * SECRET را خصوصی نگه دارید.
 * استفاده از پروکسی تابع قوانین محلی شماست؛ مسئولیت استفاده با کاربر است.
 
-## مجوز
+## کد اصلی
 
-MIT
 
 ````
-
----
-
-# install_mtproto.sh
-
-```bash
 #!/usr/bin/env bash
 # MTProto Proxy auto-install via Docker, prints ONLY the tg:// link
 # Usage: sudo bash install_mtproto.sh [PORT]
