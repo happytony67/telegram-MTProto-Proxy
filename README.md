@@ -1,99 +1,90 @@
-============================
-MTProto Proxy - ALL-IN-ONE TXT (v2)
-============================
-
-این فایلِ متنی شامل محتوای سه فایلِ موردنیاز شماست.
-برای استفاده:
-1) در ریپوی گیت‌هاب خود، سه فایل جدید بسازید با نام‌های زیر:
-   - README.md
-   - install_mtproto.sh
-   - LICENSE (اختیاری اما پیشنهاد می‌شود: MIT)
-2) محتوای هر بخش زیر را دقیقا در فایل مربوطه کپی کنید.
-3) اگر اسکریپت را روی سرور اجرا می‌کنید، طبق «مرحله ۲» در README عمل کنید.
-
----------------------------------
-BEGIN FILE: README.md
----------------------------------
 # MTProto Proxy Auto-Installer (Docker)
 اسکریپت نصب خودکار پروکسی MTProto با Docker که در پایان **فقط لینک اتصال تلگرام** (`tg://...`) را چاپ می‌کند.  
-روی اوبونتو/دبیان/سنت‌اواس/RHEL و مشابه‌ها قابل استفاده است.
+روی اوبونتو/دبیان/سنتر‌اواس/آر‌اچ‌ئی‌ال و مشتقاتشان تست شده است.
 
 ## ویژگی‌ها
 - نصب خودکار Docker (در صورت نبود)
 - باز کردن پورت در UFW/Firewalld (در صورت وجود)
 - تولید خودکار **SECRET** شانسی 16 بایتی (32 هگز)
 - اجرای کانتینر رسمی `telegrammessenger/proxy`
-- خروجیِ نهاییِ تک‌خطی: `tg://proxy?server=...&port=...&secret=...`
+- چاپ فقط یک خروجی نهایی: `tg://proxy?server=...&port=...&secret=...`
 
 ## پیش‌نیازها
 - دسترسی `root` یا `sudo`
 - یک سرور لینوکسی با IP عمومی
 - پورت پیش‌فرض `443` (قابل تغییر)
 
-## نصب سریع
-
-### مرحله ۱: ساخت فایل اسکریپت و جای‌گذاری کد
-در سرور:
+## راه‌اندازی سریع
+1) فایل اسکریپت را روی سرور بسازید:
 ```bash
 nano install_mtproto.sh
-```
-کل محتوای فایل `install_mtproto.sh` (در همین بسته) را در ادیتور پیست کنید، سپس:
-- ذخیره با **Ctrl+O** و Enter
-- خروج با **Ctrl+X**
+````
 
-### مرحله ۲: اجرای اسکریپت و دریافت لینک
-در ترمینال همین دستورات را بزنید:
+2. محتوای فایل زیر را کپی و ذخیره کنید (Ctrl+O سپس Enter، و خروج با Ctrl+X).
+3. اجرا:
+
 ```bash
 chmod +x install_mtproto.sh
 sudo bash install_mtproto.sh
-# اگر می‌خواهید پورت را مشخص کنید (مثلاً 8443):
+# یا با پورت دلخواه (مثلاً 8443):
 # sudo bash install_mtproto.sh 8443
 ```
-در پایان، فقط یک لینک مانند زیر چاپ می‌شود. همان را در تلگرام اضافه کنید:
+
+در پایان، فقط یک لینک مثل زیر چاپ می‌شود. همان را در تلگرام اضافه کنید:
+
 ```
 tg://proxy?server=YOUR_IP&port=443&secret=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
 ## بروزرسانی یا تغییر پورت
-- توقف و حذف کانتینر:
+
+* توقف و حذف کانتینر:
+
 ```bash
 sudo docker rm -f mtp
 ```
-- اجرای مجدد اسکریپت با پورت جدید:
+
+* اجرای مجدد اسکریپت با پورت جدید:
+
 ```bash
 sudo bash install_mtproto.sh 8443
 ```
 
 ## حذف کامل
+
 ```bash
 sudo docker rm -f mtp
 sudo systemctl stop docker || true
 ```
 
 ## عیب‌یابی
-- **Docker بالا نمی‌آید:** لاگ سرویس را چک کنید:
+
+* **Docker بالا نمی‌آید:** لاگ سرویس را چک کنید:
+
 ```bash
 sudo journalctl -u docker --no-pager | tail -n 200
 ```
-- **پورت بسته است:** وضعیت فایروال را بررسی کنید (`ufw status` یا `firewall-cmd --list-ports`) و پورت انتخابی را باز کنید.
-- **IP غلط/خصوصی چاپ می‌شود:** اگر پشت NAT هستید، آدرس عمومی را دستی در لینک جایگزین کنید.
-- **پورت 443 درگیر است:** از پورت‌های دیگر مثل `8443` یا `2053` استفاده کنید.
+
+* **پورت بسته است:** فایروال را بررسی کنید (`ufw status` یا `firewall-cmd --list-ports`) و پورت انتخابی را باز کنید.
+* **IP اشتباه/خصوصی چاپ می‌شود:** اگر پشت NAT هستید، آدرس عمومی را دستی جایگزین کنید.
+* **فایل‌های بزرگ/پورت 443 درگیر:** پورت دیگری مثل `8443` یا `2053` را امتحان کنید.
 
 ## نکات امنیتی و حقوقی
-- SECRET را خصوصی نگه دارید.
-- استفاده از پروکسی تابع قوانین محلی شماست؛ مسئولیت استفاده با کاربر است.
+
+* SECRET را خصوصی نگه دارید.
+* استفاده از پروکسی تابع قوانین محلی شماست؛ مسئولیت استفاده با کاربر است.
 
 ## مجوز
-MIT (متن مجوز در فایل `LICENSE`)
 
----------------------------------
-END FILE: README.md
----------------------------------
+MIT
 
+````
 
----------------------------------
-BEGIN FILE: install_mtproto.sh
----------------------------------
+---
+
+# install_mtproto.sh
+
+```bash
 #!/usr/bin/env bash
 # MTProto Proxy auto-install via Docker, prints ONLY the tg:// link
 # Usage: sudo bash install_mtproto.sh [PORT]
@@ -165,35 +156,5 @@ IP="$(detect_ip)"
 
 # Print ONLY the tg:// link
 printf "tg://proxy?server=%s&port=%s&secret=%s\n" "$IP" "$PORT" "$SECRET"
----------------------------------
-END FILE: install_mtproto.sh
----------------------------------
+````
 
-
----------------------------------
-BEGIN FILE: LICENSE (MIT)
----------------------------------
-MIT License
-
-Copyright (c)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included
-in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
----------------------------------
-END FILE: LICENSE (MIT)
----------------------------------
